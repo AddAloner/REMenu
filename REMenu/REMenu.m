@@ -183,7 +183,7 @@
         button;
     });
     
-    CGFloat navigationBarOffset = self.appearsBehindNavigationBar && self.navigationBar ? 64 : 0;
+    CGFloat navigationBarOffset = 0;
     
     // Append new item views to REMenuView
     //
@@ -250,39 +250,39 @@
                   initialSpringVelocity:4.0
                                 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                              animations:^{
-                 self.backgroundView.alpha = self.backgroundAlpha;
-                 CGRect frame = self.menuView.frame;
-                 frame.origin.y = -40.0 - self.separatorHeight;
-                 self.menuWrapperView.frame = frame;
-             } completion:^(BOOL finished) {
-                 self.isAnimating = NO;
-             }];
+                                 self.backgroundView.alpha = self.backgroundAlpha;
+                                 CGRect frame = self.menuView.frame;
+                                 frame.origin.y = -40.0 - self.separatorHeight;
+                                 self.menuWrapperView.frame = frame;
+                             } completion:^(BOOL finished) {
+                                 self.isAnimating = NO;
+                             }];
         } else {
             [UIView animateWithDuration:self.animationDuration
                                   delay:0.0
                                 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                              animations:^{
-                 self.backgroundView.alpha = self.backgroundAlpha;
-                 CGRect frame = self.menuView.frame;
-                 frame.origin.y = -40.0 - self.separatorHeight;
-                 self.menuWrapperView.frame = frame;
-             } completion:^(BOOL finished) {
-                 self.isAnimating = NO;
-             }];
-
+                                 self.backgroundView.alpha = self.backgroundAlpha;
+                                 CGRect frame = self.menuView.frame;
+                                 frame.origin.y = -40.0 - self.separatorHeight;
+                                 self.menuWrapperView.frame = frame;
+                             } completion:^(BOOL finished) {
+                                 self.isAnimating = NO;
+                             }];
+            
         }
     } else {
         [UIView animateWithDuration:self.animationDuration
                               delay:0.0
                             options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-            self.backgroundView.alpha = self.backgroundAlpha;
-            CGRect frame = self.menuView.frame;
-            frame.origin.y = -40.0 - self.separatorHeight;
-            self.menuWrapperView.frame = frame;
-        } completion:^(BOOL finished) {
-            self.isAnimating = NO;
-        }];
+                             self.backgroundView.alpha = self.backgroundAlpha;
+                             CGRect frame = self.menuView.frame;
+                             frame.origin.y = -40.0 - self.separatorHeight;
+                             self.menuWrapperView.frame = frame;
+                         } completion:^(BOOL finished) {
+                             self.isAnimating = NO;
+                         }];
     }
 }
 
@@ -298,7 +298,7 @@
     }
     
     self.navigationBar = navigationController.navigationBar;
-    [self showFromRect:CGRectMake(0, 0, navigationController.navigationBar.frame.size.width, navigationController.view.frame.size.height) inView:navigationController.view];
+    [self showFromRect:CGRectMake(0, 0, navigationController.navigationBar.frame.size.width, navigationController.topViewController.view.frame.size.height) inView:navigationController.topViewController.view];
     self.containerView.appearsBehindNavigationBar = self.appearsBehindNavigationBar;
     self.containerView.navigationBar = navigationController.navigationBar;
     if (self.appearsBehindNavigationBar) {
@@ -312,35 +312,35 @@
     
     self.isAnimating = YES;
     
-    CGFloat navigationBarOffset = self.appearsBehindNavigationBar && self.navigationBar ? 64 : 0;
+    CGFloat navigationBarOffset = 0;
     
     void (^closeMenu)(void) = ^{
         [UIView animateWithDuration:self.animationDuration
                               delay:0.0
                             options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                          animations:^ {
-            CGRect frame = self.menuView.frame;
-            frame.origin.y = - self.combinedHeight - navigationBarOffset;
-            self.menuWrapperView.frame = frame;
-            self.backgroundView.alpha = 0;
-        } completion:^(BOOL finished) {
-            self.isOpen = NO;
-            self.isAnimating = NO;
-            
-            [self.menuView removeFromSuperview];
-            [self.menuWrapperView removeFromSuperview];
-            [self.backgroundButton removeFromSuperview];
-            [self.backgroundView removeFromSuperview];
-            [self.containerView removeFromSuperview];
-            
-            if (completion) {
-                completion();
-            }
-            
-            if (self.closeCompletionHandler) {
-                self.closeCompletionHandler();
-            }
-        }];
+                             CGRect frame = self.menuView.frame;
+                             frame.origin.y = - self.combinedHeight - navigationBarOffset;
+                             self.menuWrapperView.frame = frame;
+                             self.backgroundView.alpha = 0;
+                         } completion:^(BOOL finished) {
+                             self.isOpen = NO;
+                             self.isAnimating = NO;
+                             
+                             [self.menuView removeFromSuperview];
+                             [self.menuWrapperView removeFromSuperview];
+                             [self.backgroundButton removeFromSuperview];
+                             [self.backgroundView removeFromSuperview];
+                             [self.containerView removeFromSuperview];
+                             
+                             if (completion) {
+                                 completion();
+                             }
+                             
+                             if (self.closeCompletionHandler) {
+                                 self.closeCompletionHandler();
+                             }
+                         }];
         
     };
     
